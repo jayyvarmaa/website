@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Jay Varma</title>
+
+    <meta property="og:title" content="Jay Varma">
+    <meta property="og:url" content="https://jayvarma.portfolio">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="assets/profile.jpg">
+    <meta property="og:description" content="Game Developer | B.Tech CSE Student">
+
+    <link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css?v=12345">
+</head>
+<body>
+    <div class="terminal-bg-overlay"></div>
+    <div class="terminal">
+        <!-- Warning Screen -->
+        <div id="warning-screen" class="warning-screen">
+            <div class="warning-content">
+                <h1>WARNING</h1>
+                <p>This site may contain traces of game development obsession</p>
+                <p>To continue, please press <span class="key">E</span> on your keyboard</p>
+                <p style="margin-top: 2rem; opacity: 0.7; font-size: 0.9rem;">© 2025 Jay Varma</p>
+            </div>
+        </div>
+
+        <div class="top-nav hidden">
+            <button class="nav-link active" data-page="home">
+                <i class="fas fa-home"></i> home
+            </button>
+            <span class="separator">|</span>
+            <button class="nav-link" data-page="projects">
+                <i class="fas fa-code"></i> projects
+            </button>
+            <span class="separator">|</span>
+            <button class="nav-link" data-page="experience">
+                <i class="fas fa-briefcase"></i> experience
+            </button>
+            <span class="separator">|</span>
+            <button class="nav-link" data-page="skills">
+                <i class="fas fa-tools"></i> skills
+            </button>
+            <span class="separator">|</span>
+            <button class="nav-link" data-page="contact">
+                <i class="fas fa-envelope"></i> contact
+            </button>
+        </div>
+
+        <div class="terminal-content hidden">
+            <!-- Home Page -->
+            <div id="home-page" class="page active">
+                <div class="profile-section">
+                    <!-- <div class="profile-pic"></div> -->
+                    <h1 class="terminal-title" id="name-clicker"><span class="underline-text">Jay Varma</span></h1>
+                    <p class="terminal-description">Game Developer | B.Tech CSE Student</p>
+                </div>
+
+                <div class="bio-section">
+                    <p>As a dedicated game developer, I specialize in creating immersive 3D environments and dynamic gameplay experiences.</p>
+                    <p>Currently, I'm working on an exciting new cinematic project.</p>
+                    
+                    
+                </div>
+
+                <div class="socials-section">
+                    <a href="https://www.linkedin.com/in/jayyvarmaa" target="_blank" class="social-link">
+                        <i class="fab fa-linkedin"></i> <span class="social-label">LinkedIn</span>
+                    </a>
+                    <span class="separator">|</span>
+                    <a href="https://github.com/jayvarma" target="_blank" class="social-link">
+                        <i class="fab fa-github"></i> <span class="social-label">GitHub</span>
+                    </a>
+                    <span class="separator">|</span>
+                    <a href="https://instagram.com/jayyvarmaa" target="_blank" class="social-link">
+                        <i class="fab fa-instagram"></i> <span class="social-label">Instagram</span>
+                    </a>
+                    <span class="separator">|</span>
+                    <a href="mailto:jaymayurvarma@gmail.com" class="social-link">
+                        <i class="fas fa-envelope"></i> <span class="social-label">Email</span>
+                    </a>
+                    <span class="separator">|</span>
+                    <a href="assets/JayResume.pdf" download="JayVarma-Resume.pdf" class="social-link" style="height: auto; min-height: 72px; display: flex; flex-direction: column; justify-content: center; align-items: center; grid-column: span 2;">
+                        <i class="fas fa-file-pdf"></i> <span class="social-label">Download Resume.</span>
+                    </a>
+                </div>
+                
+                <!-- Gamer Quote -->
+                <div class="gamer-quote">
+                    <p><i class="fas fa-quote-left"></i> "It's not a bug, it's a feature!" <i class="fas fa-quote-right"></i></p>
+                    <p class="quote-author">- Every Developer Ever</p>
+                </div>
+            </div>
+
+            <!-- Projects Page -->
+            <div id="projects-page" class="page">
+                <div class="projects-header">
+                    <h2 class="page-title">Projects</h2>
+                    <p class="page-description">Some things I've built (when I wasn't debugging)</p>
+                </div>
+
+                <div class="projects-list">
+                    <div class="project-item">
+                        <div class="project-header">
+                            <h3 class="project-name">RansomType</h3>
+                        </div>
+                        <p class="project-description">RansomType is a free online tool that instantly transforms your text into random ransom-style newspaper cutout letters. With live preview, one-click randomization, and options for alignment, italics, or black-and-white effects, it's perfect for designers, editors, and creators chasing a gritty, vintage aesthetic.</p>
+                        <div class="project-links">
+                            <a href="https://ransomtype.vercel.app" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-item">
+                        <div class="project-header">
+                            <h3 class="project-name">Cube Game</h3>
+                        </div>
+                        <p class="project-description">An exciting 3D cube-based game developed under VarmaBrothers. This engaging project showcases advanced 3D game mechanics and immersive gameplay elements.</p>
+                        <div class="project-links">
+                            <a href="https://varmabrothers.gumroad.com/l/cube?layout=profile" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i> View on Gumroad
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-item">
+                        <div class="project-header">
+                            <h3 class="project-name">Asteroids Game</h3>
+                        </div>
+                        <p class="project-description">A modern take on the classic Asteroids arcade game. Experience retro gaming with enhanced visuals and smooth controls in this space shooter.</p>
+                        <div class="project-links">
+                            <a href="https://varmabrothers.gumroad.com/l/asteroids?layout=profile" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i> View on Gumroad
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-item">
+                        <div class="project-header">
+                            <h3 class="project-name">Upcoming Cinematic Project</h3>
+                        </div>
+                        <p class="project-description">Currently working on an exciting new cinematic project set to launch later this year, promising to deliver a fresh and innovative experience to players.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Experience Page -->
+            <div id="experience-page" class="page">
+                <div class="projects-header">
+                    <h2 class="page-title">Experience</h2>
+                    <p class="page-description">My professional journey (and caffeine addiction)</p>
+                </div>
+
+                <div class="experience-list">
+                    
+
+                    <div class="project-item">
+                        <div class="project-header">
+                            <h3 class="project-name">Game Developer</h3>
+                            <p class="project-description">Daydreamsoft Infotech LLP · Internship</p>
+                            <p class="project-description">May 2025 - Jun 2025 · 2 mos</p>
+                            <p class="project-description">Surat, Gujarat, India · On-site</p>
+                        </div>
+                    </div>
+
+                    <div class="project-item">
+                        <div class="project-header">
+                            <h3 class="project-name">Personal Development</h3>
+                            <p class="project-description">Self-employed</p>
+                            <p class="project-description">Aug 2005 - Present</p>
+                            <p class="project-description">Surat, Gujarat, India · On-site</p>
+                        </div>
+                        <ul class="experience-details">
+                            <li>Can code for 12+ hours straight when debugging that one elusive bug</li>
+                            <li>Believes that 3 AM is the optimal time for creative coding</li>
+                            <li>Has more game ideas than time to implement them (classic developer problem)</li>
+                            <li>Still gets excited when a build compiles without errors on the first try</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills Page -->
+            <div id="skills-page" class="page">
+                <div class="projects-header">
+                    <h2 class="page-title">Skills</h2>
+                    <p class="page-description">Technical expertise and competencies (aka my superpowers)</p>
+                </div>
+
+                <div class="skills-section">
+                    <div class="skill-category">
+                        <h3 class="category-title">Game Development</h3>
+                        <ul class="skills-list">
+                            <li>Game Engines: Unity, Unreal Engine</li>
+                            <li>Programming Languages: C#</li>
+                            <li>Game Design: Level design, AI behavior scripting, UI/UX design</li>
+                            <li>Platforms: PC, Android, iOS</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3 class="category-title">Development Tools</h3>
+                        <ul class="skills-list">
+                            <li>Visual Studio, Git, Blender</li>
+                            <li>Android App Development</li>
+                            <li>Software Engineering</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3 class="category-title">Data Science & AI</h3>
+                        <ul class="skills-list">
+                            <li>Python, Pandas, SQL, PL/SQL</li>
+                            <li>Statistics, Probability, Data Wrangling</li>
+                            <li>Data Visualization, Machine Learning, Deep Learning</li>
+                            <li>Flask, Streamlit</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3 class="category-title">Game Design & Art</h3>
+                        <ul class="skills-list">
+                            <li>Game Asset Development, Character Modeling</li>
+                            <li>Game Environment Design, UI/UX Design</li>
+                            <li>Adobe Photoshop, Illustrator, Audition</li>
+                            <li>Autodesk Maya, 3ds Max, ZBrush, Substance Painter</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Page -->
+            <div id="contact-page" class="page">
+                <div class="projects-header">
+                    <h2 class="page-title">Contact</h2>
+                    <p class="page-description">Let's connect and collaborate (or just chat about games)</p>
+                </div>
+
+                <div class="contact-info">
+                    <div class="project-item">
+                        <h3 class="project-name">Get in Touch</h3>
+                        <p>I'm always open to collaborating with fellow developers, designers, and storytellers. Feel free to reach out!</p>
+                        
+                        <div class="contact-details">
+                            <p><i class="fas fa-envelope"></i> <a href="mailto:jaymayurvarma@gmail.com" class="contact-link">jaymayurvarma@gmail.com</a></p>
+                            <p><i class="fas fa-map-marker-alt"></i> Surat, Gujarat, India</p>
+                            <p><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/jayyvarmaa" target="_blank" class="contact-link">linkedin.com/in/jayyvarmaa</a></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gamer Contact Message -->
+                <div class="gamer-contact-message">
+                    <p>PS: I promise to respond faster than a player reflex in a competitive match!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Developer Mode Counter -->
+        <div id="dev-mode-counter">
+            <p id="counter-text">7 steps away from unlocking developer mode</p>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <p>© 2025 Jay Varma</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
