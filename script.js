@@ -319,4 +319,83 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 2000);
         }
     }, 30000);
+
+    // Resume preview modal logic
+    const previewBtn = document.getElementById('resume-preview-btn');
+    const modal = document.getElementById('resume-modal');
+    const frame = document.getElementById('resume-frame');
+    const closeTop = document.getElementById('resume-close-btn');
+    const closeBottom = document.getElementById('resume-close-btn-bottom');
+    const backdrop = modal ? modal.querySelector('.resume-modal__backdrop') : null;
+    const modalBody = modal ? modal.querySelector('.resume-modal__body') : null;
+
+    async function openModal() {
+        if (!modal || !modalBody) return;
+
+        // Reset body with a fresh iframe first
+        modalBody.innerHTML = '';
+        const iframe = document.createElement('iframe');
+        iframe.id = 'resume-frame';
+        iframe.title = 'Jay Varma Resume';
+        iframe.loading = 'lazy';
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.border = '0';
+        modalBody.appendChild(iframe);
+
+        try {
+            const response = await fetch('assets/JayResume.pdf', { cache: 'no-store' });
+            if (!response.ok) throw new Error('Failed to load PDF');
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+            iframe.src = url + '#toolbar=0&navpanes=0&scrollbar=1';
+            // Revoke when closed in closeModal
+            iframe.dataset.blobUrl = url;
+        } catch (err) {
+            // Fallback: object embed for browsers that block iframe PDF rendering
+            modalBody.innerHTML = '';
+            const object = document.createElement('object');
+            object.type = 'application/pdf';
+            object.data = 'assets/JayResume.pdf#toolbar=0&navpanes=0&scrollbar=1';
+            object.style.width = '100%';
+            object.style.height = '100%';
+
+            const fallback = document.createElement('div');
+            fallback.style.cssText = 'display:flex;align-items:center;justify-content:center;height:100%;padding:1rem;text-align:center;';
+            fallback.innerHTML = '<p>Preview not supported here. <a href="assets/JayResume.pdf" download="JayVarma-Resume.pdf" class="project-link" style="margin-left:.5rem;">Download PDF</a></p>';
+
+            object.appendChild(fallback);
+            modalBody.appendChild(object);
+        }
+
+        modal.classList.remove('hidden');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        if (!modal || !modalBody) return;
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        // Unload content to free resources on close
+        const existingIframe = modalBody.querySelector('iframe#resume-frame');
+        if (existingIframe) {
+            const blobUrl = existingIframe.dataset.blobUrl;
+            if (blobUrl) {
+                try { URL.revokeObjectURL(blobUrl); } catch (e) {}
+            }
+        }
+        modalBody.innerHTML = '';
+    }
+
+    if (previewBtn) previewBtn.addEventListener('click', openModal);
+    if (closeTop) closeTop.addEventListener('click', closeModal);
+    if (closeBottom) closeBottom.addEventListener('click', closeModal);
+    if (backdrop) backdrop.addEventListener('click', closeModal);
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
 });
