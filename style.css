@@ -620,6 +620,8 @@ body {
     font-size: 1rem; 
     margin-bottom: 1.5rem;
     width: calc(100vw - 1.5rem);
+    line-height: 1.4;
+    min-height: auto;
   }
   
   .socials-section {
@@ -819,10 +821,10 @@ body {
   opacity: .8;
   margin-bottom: 0;
   text-shadow: 0 0 5px #34aadb, 0 0 10px rgba(52, 170, 219, .3);
-  height: 30px;
-  line-height: 30px;
+  line-height: 1.4;
   position: relative;
   text-align: center;
+  min-height: 30px;
 }
 
 .profile-section {
@@ -1266,7 +1268,7 @@ body {
   }
   
   .profile-section {
-    height: 4rem;
+    min-height: 4rem;
   }
   
   .terminal-title .underline-text::after {
