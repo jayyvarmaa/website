@@ -38,47 +38,125 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Add 7-click developer mode feature
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM Content Loaded - Setting up developer mode');
     const nameElement = document.getElementById('name-clicker');
     const counterElement = document.getElementById('dev-mode-counter');
     const counterText = document.getElementById('counter-text');
+    
+    console.log('Name element found:', nameElement);
+    console.log('Counter element found:', counterElement);
+    console.log('Counter text found:', counterText);
+    
     let clickCount = 0;
     let clickTimer = null;
     
-    if (nameElement && counterElement && counterText) {
+    if (nameElement) {
+        console.log('Adding click listener to name element');
         nameElement.addEventListener('click', function() {
             clickCount++;
+            console.log('Name clicked! Count:', clickCount);
             
             // Reset the timer every time the user clicks
             if (clickTimer) {
                 clearTimeout(clickTimer);
             }
             
-            // Show the counter when the user starts clicking
-            if (clickCount >= 1) {
+            // Show the counter when the user starts clicking (if elements exist)
+            if (clickCount >= 1 && counterElement) {
                 counterElement.classList.add('visible');
             }
             
-            // Update the counter text
-            const stepsLeft = 7 - clickCount;
-            if (stepsLeft > 0) {
-                counterText.textContent = `${stepsLeft} steps away from unlocking developer mode`;
-            } else {
-                counterText.textContent = 'Developer mode unlocked! Reloading...';
+            // Update the counter text (if element exists)
+            if (counterText) {
+                const stepsLeft = 7 - clickCount;
+                if (stepsLeft > 0) {
+                    counterText.textContent = `${stepsLeft} steps away from unlocking developer mode`;
+                } else {
+                    counterText.textContent = 'Developer mode unlocked! Activating...';
+                }
             }
             
             // Set a timer to reset the counter after 2 seconds of inactivity
             clickTimer = setTimeout(() => {
                 clickCount = 0;
-                counterElement.classList.remove('visible');
+                if (counterElement) {
+                    counterElement.classList.remove('visible');
+                }
             }, 2000);
             
-            // If the user clicked 7 times, reload the page
+            // If the user clicked 7 times, activate developer mode
             if (clickCount >= 7) {
-                location.reload();
+                console.log('7 clicks reached! Activating developer mode...');
+                activateDeveloperMode();
             }
         });
+    } else {
+        console.log('Name element not found!');
     }
 });
+
+// Developer mode function
+function activateDeveloperMode() {
+    console.log('Developer mode activated!');
+    console.log('Adding developer-mode class to body');
+    document.body.classList.add('developer-mode');
+    
+    // Verify the class was added
+    console.log('Body classes:', document.body.className);
+    
+    // Subtle notification
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        padding: 0.75rem 1rem;
+        border-radius: 4px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        font-family: 'Space Mono', monospace;
+        z-index: 10000;
+        font-size: 0.9rem;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    `;
+    notification.textContent = 'Developer Mode';
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.style.opacity = '1';
+        notification.style.transform = 'translateY(0)';
+    }, 10);
+    
+    // Remove notification after 2 seconds
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateY(-10px)';
+        setTimeout(() => {
+            if (document.body.contains(notification)) {
+                document.body.removeChild(notification);
+            }
+        }, 300);
+    }, 2000);
+}
+
+// Add CSS animations for notification
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+    }
+`;
+document.head.appendChild(style);
 
 document.addEventListener('DOMContentLoaded', function() {
     const titleWrapper = document.querySelector('.terminal-title');
@@ -138,9 +216,11 @@ document.addEventListener('DOMContentLoaded', function() {
         link.addEventListener('click', function() {
             const targetPage = this.getAttribute('data-page');
             
+            // Remove active class from all nav links
             navLinks.forEach(nav => nav.classList.remove('active'));
             pages.forEach(page => page.classList.remove('active'));
             
+            // Add active class to clicked link and corresponding page
             this.classList.add('active');
             document.getElementById(targetPage + '-page').classList.add('active');
         });
@@ -249,6 +329,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 let activitiesCache = [];
 let lastScheduledEnd = null;
