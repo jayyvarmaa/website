@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Jay Varma</title>
+    <title>Jay Varma | Game Developer & Creative Technologist</title>
 
     <meta property="og:title" content="Jay Varma">
     <meta property="og:url" content="https://jayvarma.site">
     <meta property="og:type" content="website">
     <meta property="og:image" content="assets/profile.jpg">
-    <meta property="og:description" content="Game Developer | B.Tech CSE Student">
+    <meta property="og:description" content="Game Developer | 3D Artist | Data Scientist | B.Tech CSE Student">
+    <meta name="description"
+        content="Portfolio of Jay Varma - Game Developer, 3D Artist, and Data Scientist showcasing games, web projects, 3D models, and machine learning work.">
 
     <link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=12345">
+    <link rel="stylesheet" href="style.css?v=2.0">
+    <link rel="stylesheet" href="notebook_style.css">
+
+    <!-- TensorFlow.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+
+    <!-- Notebook Dependencies (Marked, Prism) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
 </head>
+
 <body>
     <div class="terminal-bg-overlay"></div>
     <div class="terminal">
@@ -25,7 +39,7 @@
                 <h1>WARNING</h1>
                 <p>This site may contain traces of game development obsession</p>
                 <p>To continue, please press <span class="key">E</span> on your keyboard</p>
-                <p style="margin-top: 2rem; opacity: 0.7; font-size: 0.9rem;">© 2025 Jay Varma</p>
+                <p style="margin-top: 2rem; opacity: 0.7; font-size: 0.9rem;">© 2026 Jay Varma</p>
             </div>
         </div>
 
@@ -37,6 +51,10 @@
             <button class="nav-link" data-page="projects">
                 <i class="fas fa-code"></i>
                 <span class="nav-text">projects</span>
+            </button>
+            <button class="nav-link" data-page="gallery">
+                <i class="fas fa-cube"></i>
+                <span class="nav-text">3D gallery</span>
             </button>
             <button class="nav-link" data-page="experience">
                 <i class="fas fa-briefcase"></i>
@@ -56,16 +74,30 @@
             <!-- Home Page -->
             <div id="home-page" class="page active">
                 <div class="profile-section">
-                    <!-- <div class="profile-pic"></div> -->
                     <h1 class="terminal-title" id="name-clicker"><span class="underline-text">Jay Varma</span></h1>
-                    <p class="terminal-description">Game Developer | B.Tech CSE Student</p>
+                    <p class="terminal-description">Game Developer | 3D Artist | Data Scientist</p>
                 </div>
 
                 <div class="bio-section">
-                    <p>As a dedicated game developer, I specialize in creating immersive 3D environments and dynamic gameplay experiences.</p>
+                    <p>As a dedicated game developer, I specialize in creating immersive 3D environments and dynamic
+                        gameplay experiences.</p>
                     <p>Currently, I'm working on an exciting new cinematic project.</p>
-                    
-                    
+                </div>
+
+                <!-- Stats Section -->
+                <div class="stats-section">
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="6">0</span>
+                        <span class="stat-label">Projects</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="3">0</span>
+                        <span class="stat-label">Categories</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="3">0</span>
+                        <span class="stat-label">3D Models</span>
+                    </div>
                 </div>
 
                 <div class="socials-section">
@@ -86,13 +118,14 @@
                     </a>
                     <span class="separator">|</span>
                     <button id="resume-preview-btn" class="social-link">
-                        <i class="fas fa-file-pdf"></i> <span class="social-label">Download Resume</span>
+                        <i class="fas fa-file-pdf"></i> <span class="social-label">Resume</span>
                     </button>
                 </div>
-                
+
                 <!-- Gamer Quote -->
                 <div class="gamer-quote">
-                    <p><i class="fas fa-quote-left"></i> "It's not a bug, it's a feature!" <i class="fas fa-quote-right"></i></p>
+                    <p><i class="fas fa-quote-left"></i> "It's not a bug, it's a feature!" <i
+                            class="fas fa-quote-right"></i></p>
                     <p class="quote-author">- Every Developer Ever</p>
                 </div>
             </div>
@@ -104,70 +137,46 @@
                     <p class="page-description">Some things I've built (when I wasn't debugging)</p>
                 </div>
 
-                
+                <!-- Category Filter Tabs -->
+                <div class="category-filters">
+                    <button class="filter-btn active" data-category="all">
+                        <i class="fas fa-th"></i> All
+                    </button>
+                    <button class="filter-btn" data-category="games">
+                        <i class="fas fa-gamepad"></i> Games
+                    </button>
+                    <button class="filter-btn" data-category="web">
+                        <i class="fas fa-globe"></i> Web
+                    </button>
 
-                    <div class="project-item">
-                        <div class="project-header">
-                            <h3 class="project-name">Upcoming Cinematic Project</h3>
-                        </div>
-                        <p class="project-description">Currently working on an exciting new cinematic project set to launch later this year, promising to deliver a fresh and innovative experience to players.</p>
-                    </div>
+                    <button class="filter-btn" data-category="datascience">
+                        <i class="fas fa-brain"></i> Data Science
+                    </button>
+                </div>
 
-                    
-                <div class="projects-list" style="margin-top: 2rem;">
-                    <div class="project-item">
-                        <div class="project-header" style="display: flex; justify-content: space-between; align-items: flex-start;">
-                            <h3 class="project-name">NoAn!</h3>
-                            <span style="background: var(--primary-color); color: #000; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: bold; margin-top: 0.2rem;">LATEST</span>
-                        </div>
-                        <p class="project-description">A Chrome extension that disables annotations on YouTube videos. Removes the Share, Watch Later, and iCart buttons that appear when watching YouTube videos in fullscreen mode, providing a cleaner viewing experience.</p>
-                        <div class="project-links">
-                            <a href="https://noan.jayvarma.site" target="_blank" class="project-link">
-                                <i class="fas fa-external-link-alt"></i> View
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="project-item">
-                        <div class="project-header">
-                            <h3 class="project-name">RansomType</h3>
-                        </div>
-                        <p class="project-description">RansomType is a free online tool that instantly transforms your text into random ransom-style newspaper cutout letters. With live preview, one-click randomization, and options for alignment, italics, or black-and-white effects, it's perfect for designers, editors, and creators chasing a gritty, vintage aesthetic.</p>
-                        <div class="project-links">
-                            <a href="https://ransomtype.jayvarma.site" target="_blank" class="project-link">
-                                <i class="fas fa-external-link-alt"></i> View
-                            </a>
-                        </div>
-                    </div>
-
-                    
-                    <div class="project-item">
-                        <div class="project-header">
-                            <h3 class="project-name">Asteroids Game</h3>
-                        </div>
-                        <p class="project-description">A modern take on the classic Asteroids arcade game. Experience retro gaming with enhanced visuals and smooth controls in this space shooter.</p>
-                        <div class="project-links" style="display: flex; justify-content: flex-start; gap: 1rem;">
-                            <a href="assets/Asteroids.rar" download class="project-link">
-                                <i class="fas fa-download"></i> Download Now
-                            </a>
-                            
-                        </div>
-                    </div>
-
-                    <div class="project-item">
-                        <div class="project-header">
-                            <h3 class="project-name">Cube Game</h3>
-                        </div>
-                        <p class="project-description">An exciting 3D cube-based game developed under VarmaBrothers. This engaging project showcases advanced 3D game mechanics and immersive gameplay elements.</p>
-                        <div class="project-links" style="display: flex; justify-content: flex-start; gap: 1rem;">
-                            <a href="assets/Cube!.rar" download class="project-link">
-                                <i class="fas fa-download"></i> Download Now
-                            </a>
-                           
-                        </div>
-                    </div>
+                <!-- Projects Grid -->
+                <div class="projects-grid" id="projects-grid">
+                    <!-- Projects will be dynamically inserted here -->
                 </div>
             </div>
+
+            <!-- 3D Gallery Page -->
+            <div id="gallery-page" class="page">
+                <div class="projects-header">
+                    <h2 class="page-title">3D Gallery</h2>
+                    <p class="page-description">Click on any model to view it in full screen</p>
+                </div>
+
+                <div class="gallery-grid" id="gallery-grid">
+                    <!-- Model cards will be inserted dynamically by JS -->
+                </div>
+                <div class="gallery-note">
+                    <i class="fas fa-info-circle"></i>
+                    <p>More 3D models coming soon! Check back later for interactive previews.</p>
+                </div>
+            </div>
+
+
 
             <!-- Experience Page -->
             <div id="experience-page" class="page">
@@ -177,28 +186,47 @@
                 </div>
 
                 <div class="experience-list">
-                    
-
-                    <div class="project-item">
-                        <div class="project-header">
-                            <h3 class="project-name">Game Developer</h3>
-                            <p class="project-description">Daydreamsoft Infotech LLP · Internship</p>
-                            <p class="project-description">May 2025 - Jun 2025 · 2 mos</p>
-                            <p class="project-description">Surat, Gujarat, India · On-site</p>
+                    <div class="experience-card">
+                        <div class="experience-header">
+                            <div class="experience-icon">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
+                            <div class="experience-title">
+                                <h3>Game Developer</h3>
+                                <p class="company">Daydreamsoft Infotech LLP</p>
+                            </div>
+                            <span class="experience-badge">Internship</span>
                         </div>
+                        <div class="experience-meta">
+                            <span><i class="fas fa-calendar"></i> May 2025 - Jun 2025</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Surat, Gujarat</span>
+                        </div>
+                        <ul class="experience-details">
+                            <li>Developed game mechanics and systems using Unity Engine</li>
+                            <li>Collaborated on 3D asset integration and optimization</li>
+                            <li>Implemented AI behavior scripts for NPCs</li>
+                        </ul>
                     </div>
 
-                    <div class="project-item">
-                        <div class="project-header">
-                            <h3 class="project-name">Personal Development</h3>
-                            <p class="project-description">Self-employed</p>
-                            <p class="project-description">Aug 2005 - Present</p>
-                            <p class="project-description">Surat, Gujarat, India · On-site</p>
+                    <div class="experience-card">
+                        <div class="experience-header">
+                            <div class="experience-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="experience-title">
+                                <h3>Personal Development</h3>
+                                <p class="company">Self-employed</p>
+                            </div>
+                            <span class="experience-badge ongoing">Ongoing</span>
+                        </div>
+                        <div class="experience-meta">
+                            <span><i class="fas fa-calendar"></i> Aug 2020 - Present</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Surat, Gujarat</span>
                         </div>
                         <ul class="experience-details">
                             <li>Can code for 12+ hours straight when debugging that one elusive bug</li>
                             <li>Believes that 3 AM is the optimal time for creative coding</li>
-                            <li>Has more game ideas than time to implement them (classic developer problem)</li>
+                            <li>Has more game ideas than time to implement them</li>
                             <li>Still gets excited when a build compiles without errors on the first try</li>
                         </ul>
                     </div>
@@ -212,44 +240,89 @@
                     <p class="page-description">Technical expertise and competencies (aka my superpowers)</p>
                 </div>
 
-                <div class="skills-section">
-                    <div class="skill-category">
-                        <h3 class="category-title">Game Development</h3>
-                        <ul class="skills-list">
-                            <li>Game Engines: Unity, Unreal Engine</li>
-                            <li>Programming Languages: C#</li>
-                            <li>Game Design: Level design, AI behavior scripting, UI/UX design</li>
-                            <li>Platforms: PC, Android, iOS</li>
-                        </ul>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <h3>Game Development</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Unity</span>
+                            <span class="skill-tag">Unreal Engine</span>
+                            <span class="skill-tag">C#</span>
+                            <span class="skill-tag">Level Design</span>
+                            <span class="skill-tag">AI Scripting</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 90%"></div>
+                        </div>
                     </div>
 
-                    <div class="skill-category">
-                        <h3 class="category-title">Development Tools</h3>
-                        <ul class="skills-list">
-                            <li>Visual Studio, Git, Blender</li>
-                            <li>Android App Development</li>
-                            <li>Software Engineering</li>
-                        </ul>
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <h3>3D Art & Design</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Blender</span>
+                            <span class="skill-tag">Maya</span>
+                            <span class="skill-tag">3ds Max</span>
+                            <span class="skill-tag">ZBrush</span>
+                            <span class="skill-tag">Substance Painter</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 85%"></div>
+                        </div>
                     </div>
 
-                    <div class="skill-category">
-                        <h3 class="category-title">Data Science & AI</h3>
-                        <ul class="skills-list">
-                            <li>Python, Pandas, SQL, PL/SQL</li>
-                            <li>Statistics, Probability, Data Wrangling</li>
-                            <li>Data Visualization, Machine Learning, Deep Learning</li>
-                            <li>Flask, Streamlit</li>
-                        </ul>
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>Data Science & AI</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">TensorFlow</span>
+                            <span class="skill-tag">Keras</span>
+                            <span class="skill-tag">Pandas</span>
+                            <span class="skill-tag">Machine Learning</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 75%"></div>
+                        </div>
                     </div>
 
-                    <div class="skill-category">
-                        <h3 class="category-title">Game Design & Art</h3>
-                        <ul class="skills-list">
-                            <li>Game Asset Development, Character Modeling</li>
-                            <li>Game Environment Design, UI/UX Design</li>
-                            <li>Adobe Photoshop, Illustrator, Audition</li>
-                            <li>Autodesk Maya, 3ds Max, ZBrush, Substance Painter</li>
-                        </ul>
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3>Web Development</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">HTML/CSS</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">Flask</span>
+                            <span class="skill-tag">Streamlit</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 80%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3>Tools & Software</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">Visual Studio</span>
+                            <span class="skill-tag">Photoshop</span>
+                            <span class="skill-tag">Illustrator</span>
+                            <span class="skill-tag">Audition</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 88%"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -261,36 +334,52 @@
                     <p class="page-description">Let's connect and collaborate (or just chat about games)</p>
                 </div>
 
-                <div class="contact-info">
-                    <div class="project-item">
-                        <h3 class="project-name">Get in Touch</h3>
-                        <p>I'm always open to collaborating with fellow developers, designers, and storytellers. Feel free to reach out!</p>
-                        
-                        <div class="contact-details">
-                            <p><i class="fas fa-envelope"></i> <a href="mailto:jaymayurvarma@gmail.com" class="contact-link">jaymayurvarma@gmail.com</a></p>
-                            <p><i class="fas fa-map-marker-alt"></i> Surat, Gujarat, India</p>
-                            <p><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/jayyvarmaa" target="_blank" class="contact-link">linkedin.com/in/jayyvarmaa</a></p>
+                <div class="contact-card">
+                    <h3>Get in Touch</h3>
+                    <p>I'm always open to collaborating with fellow developers, designers, and storytellers. Feel free
+                        to reach out!</p>
+
+                    <div class="contact-links">
+                        <a href="mailto:jaymayurvarma@gmail.com" class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>jaymayurvarma@gmail.com</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/jayyvarmaa" target="_blank" class="contact-item">
+                            <i class="fab fa-linkedin"></i>
+                            <span>linkedin.com/in/jayyvarmaa</span>
+                        </a>
+                        <a href="https://github.com/jayyvarmaa" target="_blank" class="contact-item">
+                            <i class="fab fa-github"></i>
+                            <span>github.com/jayyvarmaa</span>
+                        </a>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Surat, Gujarat, India</span>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Gamer Contact Message -->
                 <div class="gamer-contact-message">
                     <p>PS: I promise to respond faster than a player reflex in a competitive match!</p>
                 </div>
             </div>
         </div>
-
-        
-
-
-        <footer class="footer">
-            <div class="footer-content">
-                <p>© 2025 Jay Varma</p>
-            </div>
-        </footer>
     </div>
 
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2026 Jay Varma | Built with <i class="fas fa-heart"></i> and lots of <i class="fas fa-coffee"></i>
+            </p>
+        </div>
+    </footer>
+    </div>
+
+
+
+    <script src="notebook_viewer.js"></script>
+    <script src="assets/DS Projects/MNIST Handwritten Digit Recognizer/mnist_notebook_data.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>

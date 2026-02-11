@@ -1,110 +1,318 @@
-// Add warning screen functionality
-document.addEventListener('DOMContentLoaded', function() {
-    // Check if we're on mobile device
+// ============================================
+// PROJECT DATA - Easy to update!
+// ============================================
+const projects = [
+    // GAMES
+    {
+        id: 'asteroids',
+        name: 'Asteroids Game',
+        category: 'games',
+        description: 'A modern take on the classic Asteroids arcade game. Experience retro gaming with enhanced visuals and smooth controls in this space shooter.',
+        image: 'assets/thumbnails/Asterioid Thumbnail.jpg',
+        tech: ['Unity', 'C#'],
+        links: {
+            download: 'assets/Asteroids.rar'
+        },
+        badge: null,
+        featured: false
+    },
+    {
+        id: 'cube-game',
+        name: 'Cube Game',
+        category: 'games',
+        description: 'An exciting 3D cube-based game developed under VarmaBrothers. This engaging project showcases advanced 3D game mechanics and immersive gameplay elements.',
+        image: 'assets/thumbnails/cube Thumbnail.jpg',
+        tech: ['Unity', 'C#', '3D'],
+        links: {
+            download: 'assets/Cube!.rar'
+        },
+        badge: null,
+        featured: false
+    },
+
+    // WEB PROJECTS
+    {
+        id: 'noan',
+        name: 'NoAn!',
+        category: 'web',
+        description: 'A Chrome extension that disables annotations on YouTube videos. Removes the Share, Watch Later, and iCart buttons that appear when watching YouTube videos in fullscreen mode.',
+        image: 'assets/thumbnails/noan Thumbnail.jpg',
+        tech: ['JavaScript', 'Chrome API', 'CSS'],
+        links: {
+            view: 'https://noan.jayvarma.site'
+        },
+        badge: 'Latest',
+        featured: true
+    },
+    {
+        id: 'ransomtype',
+        name: 'RansomType',
+        category: 'web',
+        description: 'A free online tool that transforms your text into random ransom-style newspaper cutout letters. Features live preview, one-click randomization, alignment options, and black-and-white effects.',
+        image: 'assets/thumbnails/ransomtype Thumbnail.jpg',
+        tech: ['JavaScript', 'HTML', 'CSS'],
+        links: {
+            view: 'https://ransomtype.jayvarma.site'
+        },
+        badge: null,
+        featured: false
+    },
+    {
+        id: 'portfolio',
+        name: 'Portfolio Website',
+        category: 'web',
+        description: 'This very website! A terminal-themed portfolio with interactive elements, Discord activity integration, and responsive design.',
+        image: 'assets/thumbnails/Portfolio Thumbnail Blue.jpg',
+        tech: ['HTML', 'CSS', 'JavaScript'],
+        links: {
+            github: 'https://github.com/jayyvarmaa/website'
+        },
+        badge: null,
+        featured: false
+    },
+
+    // DATA SCIENCE
+    {
+        id: 'mnist',
+        name: 'MNIST Digit Recognition',
+        category: 'datascience',
+        description: 'Deep learning model for handwritten digit classification. This interactive notebook demonstrates real-time training and prediction using Scikit-Learn in your browser.',
+        image: 'assets/thumbnails/MNIST Thumbnail.jpg',
+        tech: ['Python', 'Scikit-Learn', 'NumPy', 'Matplotlib'],
+        links: {
+            explore: 'global:MNIST_NOTEBOOK_DATA'
+        },
+        badge: 'ML / AI',
+        featured: true,
+        demo: false
+    }
+];
+
+// ============================================
+// 3D MODELS DATA - Supports Sketchfab & Local
+// ============================================
+// ============================================
+// 3D MODELS DATA - External Links Only
+// ============================================
+const models3D = [
+    {
+        id: 'stylized-house',
+        name: 'Stylized House',
+        description: 'A low-poly stylized house model with detailed PBR texturing. Features hand-painted textures and optimized geometry for real-time rendering.',
+        thumbnail: 'assets/thumbnails/Stylized House Thumbnail.jpg',
+        tech: ['3DS Max', 'GLTF'],
+        sketchfabUrl: 'https://sketchfab.com/3d-models/stylized-cozy-house-b2abb4b19a9b411790f8a29d490cafe5'
+    },
+    {
+        id: 'buoy',
+        name: 'Stylized Buoy',
+        description: 'A stylized variation of a buoy, capable of floating in water. Modeled and textured in Blender.',
+        thumbnail: 'assets/thumbnails/Buoy Model.jpg',
+        tech: ['Blender', 'GLB'],
+        sketchfabUrl: 'https://sketchfab.com/3d-models/buoy-model-d4f9bcba737a4beab33518e53025f456'
+    },
+    {
+        id: 'perfume-bottle',
+        name: 'Perfume Bottle',
+        description: 'A detailed 3D model of a perfume bottle with metal and marble textures. Features normal mapping for realistic surface details.',
+        thumbnail: 'assets/thumbnails/perfume.jpg',
+        tech: ['Blender', 'GLTF', 'PBR'],
+        sketchfabUrl: 'https://sketchfab.com/3d-models/perfume-bottle-38567420de4f456594241367e2bff6d2'
+    }
+];
+
+// ============================================
+// INITIALIZATION
+// ============================================
+document.addEventListener('DOMContentLoaded', function () {
+    initWarningScreen();
+    initNavigation();
+    initTypingAnimation();
+    initSocialLinks();
+    initDeveloperMode();
+    initStatsCounter();
+    initProjectsGrid();
+    initCategoryFilters();
+    init3DGallery();
+    initResumeButton();
+    connectToLanyard();
+});
+
+// ============================================
+// WARNING SCREEN
+// ============================================
+function initWarningScreen() {
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    
-    // Get warning screen and content elements
     const warningScreen = document.getElementById('warning-screen');
     const terminalContent = document.querySelector('.terminal-content');
     const topNav = document.querySelector('.top-nav');
-    const devModeCounter = document.getElementById('dev-mode-counter');
-    
-    // If on mobile, hide warning screen and show content
+
     if (isMobile) {
         if (warningScreen) warningScreen.style.display = 'none';
         if (terminalContent) terminalContent.classList.remove('hidden');
         if (topNav) topNav.classList.remove('hidden');
+        window.scrollTo(0, 0);
         return;
     }
-    
-    // On desktop, show warning screen and hide content initially
+
     if (warningScreen) warningScreen.style.display = 'flex';
     if (terminalContent) terminalContent.classList.add('hidden');
     if (topNav) topNav.classList.add('hidden');
-    // Hide developer mode counter on warning screen
-    if (devModeCounter) devModeCounter.style.display = 'none';
-    
-    // Listen for 'E' key press to hide warning screen
-    document.addEventListener('keydown', function(e) {
+
+    document.addEventListener('keydown', function (e) {
         if (e.key.toLowerCase() === 'e' && warningScreen && warningScreen.style.display !== 'none') {
             warningScreen.style.display = 'none';
             if (terminalContent) terminalContent.classList.remove('hidden');
             if (topNav) topNav.classList.remove('hidden');
-            // Show developer mode counter when warning screen is hidden
-            if (devModeCounter) devModeCounter.style.display = 'block';
+            window.scrollTo(0, 0);
         }
     });
-});
+}
 
-// Add 7-click developer mode feature
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM Content Loaded - Setting up developer mode');
-    const nameElement = document.getElementById('name-clicker');
-    const counterElement = document.getElementById('dev-mode-counter');
-    const counterText = document.getElementById('counter-text');
-    
-    console.log('Name element found:', nameElement);
-    console.log('Counter element found:', counterElement);
-    console.log('Counter text found:', counterText);
-    
-    let clickCount = 0;
-    let clickTimer = null;
-    
-    if (nameElement) {
-        console.log('Adding click listener to name element');
-        nameElement.addEventListener('click', function() {
-            clickCount++;
-            console.log('Name clicked! Count:', clickCount);
-            
-            // Reset the timer every time the user clicks
-            if (clickTimer) {
-                clearTimeout(clickTimer);
-            }
-            
-            // Show the counter when the user starts clicking (if elements exist)
-            if (clickCount >= 1 && counterElement) {
-                counterElement.classList.add('visible');
-            }
-            
-            // Update the counter text (if element exists)
-            if (counterText) {
-                const stepsLeft = 7 - clickCount;
-                if (stepsLeft > 0) {
-                    counterText.textContent = `${stepsLeft} steps away from unlocking developer mode`;
-                } else {
-                    counterText.textContent = 'Developer mode unlocked! Activating...';
-                }
-            }
-            
-            // Set a timer to reset the counter after 2 seconds of inactivity
-            clickTimer = setTimeout(() => {
-                clickCount = 0;
-                if (counterElement) {
-                    counterElement.classList.remove('visible');
-                }
-            }, 2000);
-            
-            // If the user clicked 7 times, activate developer mode
-            if (clickCount >= 7) {
-                console.log('7 clicks reached! Activating developer mode...');
-                activateDeveloperMode();
+// ============================================
+// NAVIGATION
+// ============================================
+function initNavigation() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const pages = document.querySelectorAll('.page');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            const targetPage = this.getAttribute('data-page');
+
+            navLinks.forEach(nav => nav.classList.remove('active'));
+            pages.forEach(page => page.classList.remove('active'));
+
+            this.classList.add('active');
+            const targetElement = document.getElementById(targetPage + '-page');
+            if (targetElement) {
+                targetElement.classList.add('active');
+                // Scroll to top of page when switching
+                window.scrollTo(0, 0);
+            } else {
+                console.error('Target page not found:', targetPage + '-page');
             }
         });
-    } else {
-        console.log('Name element not found!');
-    }
-});
+    });
+}
 
-// Developer mode function
+// ============================================
+// TYPING ANIMATION
+// ============================================
+function initTypingAnimation() {
+    const titleWrapper = document.querySelector('.terminal-title');
+    const title = document.querySelector('.terminal-title .underline-text');
+    const description = document.querySelector('.terminal-description');
+
+    if (!title || !description || !titleWrapper) return;
+
+    const originalTitle = title.textContent;
+    const originalDescription = description.textContent;
+    let typingCompleted = false;
+
+    title.textContent = '';
+    description.textContent = '';
+
+    let titleIndex = 0;
+    function typeTitle() {
+        if (titleIndex < originalTitle.length) {
+            title.textContent += originalTitle.charAt(titleIndex);
+            titleIndex++;
+            setTimeout(typeTitle, 60);
+        } else {
+            setTimeout(typeDescription, 300);
+        }
+    }
+
+    let descIndex = 0;
+    function typeDescription() {
+        if (descIndex < originalDescription.length) {
+            description.textContent += originalDescription.charAt(descIndex);
+            descIndex++;
+            setTimeout(typeDescription, 25);
+        } else {
+            typingCompleted = true;
+        }
+    }
+
+    setTimeout(typeTitle, 300);
+}
+
+// ============================================
+// SOCIAL LINKS KEYBOARD NAVIGATION
+// ============================================
+function initSocialLinks() {
+    const socialLinks = document.querySelectorAll('.social-link');
+    let currentIndex = -1;
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowDown' || (e.key === 'Tab' && !e.shiftKey)) {
+            e.preventDefault();
+            currentIndex = (currentIndex + 1) % socialLinks.length;
+            updateSocialSelection(socialLinks, currentIndex);
+        } else if (e.key === 'ArrowUp' || (e.key === 'Tab' && e.shiftKey)) {
+            e.preventDefault();
+            currentIndex = currentIndex <= 0 ? socialLinks.length - 1 : currentIndex - 1;
+            updateSocialSelection(socialLinks, currentIndex);
+        } else if (e.key === 'Enter' && currentIndex >= 0) {
+            e.preventDefault();
+            socialLinks[currentIndex].click();
+        }
+    });
+}
+
+function updateSocialSelection(links, index) {
+    links.forEach((link, i) => {
+        link.classList.toggle('selected', i === index);
+    });
+}
+
+// ============================================
+// DEVELOPER MODE (7 clicks on name)
+// ============================================
+function initDeveloperMode() {
+    const nameElement = document.getElementById('name-clicker');
+    let clickCount = 0;
+    let clickTimer = null;
+
+    if (!nameElement) return;
+
+    nameElement.addEventListener('click', function () {
+        clickCount++;
+
+        if (clickTimer) clearTimeout(clickTimer);
+
+        clickTimer = setTimeout(() => {
+            clickCount = 0;
+        }, 2000);
+
+        if (clickCount >= 7) {
+            activateDeveloperMode();
+            clickCount = 0;
+        }
+    });
+}
+
 function activateDeveloperMode() {
-    console.log('Developer mode activated!');
-    console.log('Adding developer-mode class to body');
-    document.body.classList.add('developer-mode');
-    
-    // Verify the class was added
-    console.log('Body classes:', document.body.className);
-    
-    // Subtle notification
+    document.body.classList.toggle('developer-mode');
+
+    const isActive = document.body.classList.contains('developer-mode');
+
+    // Update dynamic content for developer mode
+    const portfolioProject = projects.find(p => p.id === 'portfolio');
+    if (portfolioProject) {
+        portfolioProject.image = isActive
+            ? 'assets/thumbnails/Portfolio Thumbnail White.jpg'
+            : 'assets/thumbnails/Portfolio Thumbnail Blue.jpg';
+
+        // Fully re-render to update the image source
+        renderProjects(projects);
+
+        // Re-apply current filter
+        const activeFilter = document.querySelector('.filter-btn.active')?.dataset.category || 'all';
+        filterProjects(activeFilter);
+    }
+
     const notification = document.createElement('div');
     notification.style.cssText = `
         position: fixed;
@@ -123,288 +331,308 @@ function activateDeveloperMode() {
         transition: all 0.3s ease;
         backdrop-filter: blur(10px);
     `;
-    notification.textContent = 'Developer Mode';
+    notification.textContent = isActive ? 'Developer Mode: ON' : 'Developer Mode: OFF';
     document.body.appendChild(notification);
-    
-    // Animate in
+
     setTimeout(() => {
         notification.style.opacity = '1';
         notification.style.transform = 'translateY(0)';
     }, 10);
-    
-    // Remove notification after 2 seconds
+
     setTimeout(() => {
         notification.style.opacity = '0';
         notification.style.transform = 'translateY(-10px)';
-        setTimeout(() => {
-            if (document.body.contains(notification)) {
-                document.body.removeChild(notification);
-            }
-        }, 300);
+        setTimeout(() => notification.remove(), 300);
     }, 2000);
 }
 
-// Add CSS animations for notification
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideIn {
-        from { transform: translateX(100%); opacity: 0; }
-        to { transform: translateX(0); opacity: 1; }
-    }
-    @keyframes slideOut {
-        from { transform: translateX(0); opacity: 1; }
-        to { transform: translateX(100%); opacity: 0; }
-    }
-`;
-document.head.appendChild(style);
+// ============================================
+// STATS COUNTER ANIMATION
+// ============================================
+function initStatsCounter() {
+    const statNumbers = document.querySelectorAll('.stat-number');
 
-document.addEventListener('DOMContentLoaded', function() {
-    const titleWrapper = document.querySelector('.terminal-title');
-    const title = document.querySelector('.terminal-title .underline-text');
-    const description = document.querySelector('.terminal-description');
-    let typingCompleted = false;
-    
-    if (title && description && titleWrapper) {
-        const originalTitle = title.textContent;
-        const originalDescription = description.textContent;
-
-        function runTypingAnimation() {
-            if (typingCompleted) return;
-
-            title.textContent = '';
-            description.textContent = '';
-
-            titleWrapper.classList.add('typing-cursor');
-
-            let titleIndex = 0;
-            function typeTitle() {
-                if (titleIndex < originalTitle.length) {
-                    title.textContent += originalTitle.charAt(titleIndex);
-                    titleIndex++;
-                    setTimeout(typeTitle, 60);
-                } else {
-                    titleWrapper.classList.remove('typing-cursor');
-                    description.classList.add('typing-cursor');
-                    setTimeout(typeDescription, 300);
-                }
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = entry.target;
+                const countTo = parseInt(target.dataset.count);
+                animateCounter(target, countTo);
+                observer.unobserve(target);
             }
+        });
+    }, { threshold: 0.5 });
 
-            let descIndex = 0;
-            function typeDescription() {
-                if (descIndex < originalDescription.length) {
-                    description.textContent += originalDescription.charAt(descIndex);
-                    descIndex++;
-                    setTimeout(typeDescription, 30);
-                } else {
-                    typingCompleted = true;
-                }
-            }
+    statNumbers.forEach(stat => observer.observe(stat));
+}
 
-            setTimeout(typeTitle, 300);
+function animateCounter(element, target) {
+    let current = 0;
+    const increment = target / 30;
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            element.textContent = target + '+';
+            clearInterval(timer);
+        } else {
+            element.textContent = Math.floor(current);
         }
+    }, 50);
+}
 
-        runTypingAnimation();
+// ============================================
+// PROJECTS GRID
+// ============================================
+function initProjectsGrid() {
+    const grid = document.getElementById('projects-grid');
+    if (!grid) return;
+
+    renderProjects(projects);
+}
+
+function renderProjects(projectsToRender) {
+    const grid = document.getElementById('projects-grid');
+    if (!grid) return;
+
+    grid.innerHTML = '';
+
+    projectsToRender.forEach((project, index) => {
+        const card = createProjectCard(project, index);
+        grid.appendChild(card);
+    });
+}
+
+function createProjectCard(project, index) {
+    const card = document.createElement('div');
+    card.className = 'project-card';
+    card.dataset.category = project.category;
+    card.style.animationDelay = `${index * 0.05}s`;
+
+    const imageSection = document.createElement('div');
+    imageSection.className = 'project-image';
+
+    if (project.image) {
+        const img = document.createElement('img');
+        img.src = project.image;
+        img.alt = project.name;
+        img.loading = 'lazy';
+        imageSection.appendChild(img);
+    } else {
+        const placeholder = document.createElement('div');
+        placeholder.className = 'project-image-placeholder';
+        placeholder.innerHTML = `
+            <i class="fas ${getCategoryIcon(project.category)}"></i>
+            <span>${project.name}</span>
+        `;
+        imageSection.appendChild(placeholder);
     }
-    
-    const navLinks = document.querySelectorAll('.nav-link');
-    const pages = document.querySelectorAll('.page');
-    
-    navLinks.forEach(link => {
-        // Skip the secret gamer button
-        if (link.id === 'gamer-button') return;
-        
-        link.addEventListener('click', function() {
-            const targetPage = this.getAttribute('data-page');
-            
-            // Remove active class from all nav links
-            navLinks.forEach(nav => nav.classList.remove('active'));
-            pages.forEach(page => page.classList.remove('active'));
-            
-            // Add active class to clicked link and corresponding page
+
+    card.appendChild(imageSection);
+
+    const content = document.createElement('div');
+    content.className = 'project-content';
+
+    content.innerHTML = `
+        <div class="project-tags">
+            <span class="project-category-tag">${getCategoryLabel(project.category)}</span>
+            ${project.badge ? `<span class="project-status-tag">${project.badge}</span>` : ''}
+        </div>
+        <h3 class="project-name">${project.name}</h3>
+        <p class="project-description">${project.description}</p>
+        <div class="project-card-footer">
+            <div class="tech-badges">
+                ${project.tech.map(t => `<span class="tech-badge">${t}</span>`).join('')}
+            </div>
+            <div class="project-links">
+                ${Object.entries(project.links).map(([type, url]) => createLinkButton(type, url, project.name)).join('')}
+                ${project.demo ? `<button class="project-link demo-btn" onclick="openAIDemo()"><i class="fas fa-play"></i> Live Demo</button>` : ''}
+            </div>
+        </div>
+    `;
+
+    card.appendChild(content);
+    return card;
+}
+
+function getCategoryIcon(category) {
+    const icons = {
+        games: 'fa-gamepad',
+        web: 'fa-globe',
+        '3d': 'fa-cube',
+        datascience: 'fa-brain'
+    };
+    return icons[category] || 'fa-folder';
+}
+
+function getCategoryLabel(category) {
+    const labels = {
+        games: 'Game',
+        web: 'Web',
+        '3d': '3D',
+        datascience: 'Data Science'
+    };
+    return labels[category] || category;
+}
+
+function createLinkButton(type, url, projectName = '') {
+    const icons = {
+        view: 'fa-external-link-alt',
+        github: 'fa-github',
+        download: 'fa-download',
+        demo: 'fa-play',
+        notebook: 'fa-book',
+        report: 'fa-file-pdf',
+        slides: 'fa-file-powerpoint'
+    };
+
+    const labels = {
+        view: 'View',
+        github: 'GitHub',
+        download: 'Download',
+        demo: 'Demo',
+        notebook: 'Notebook',
+        explore: 'Explore',
+        report: 'Report',
+        slides: 'Slides'
+    };
+
+    if (type === 'notebook' || type === 'explore') {
+        const safeTitle = projectName.replace(/'/g, "\\'"); // simple escape
+        const icon = type === 'explore' ? 'fa-rocket' : icons[type];
+        return `
+            <button class="project-link notebook-btn" onclick="openNotebook('${url}', '${safeTitle}')">
+                <i class="fas ${icon}"></i>
+                ${labels[type]}
+            </button>
+        `;
+    }
+
+    const isDownload = type === 'download';
+
+    return `
+        <a href="${url}" 
+           class="project-link" 
+           ${isDownload ? 'download' : 'target="_blank"'}>
+            <i class="fas ${icons[type] || 'fa-link'}"></i>
+            ${labels[type] || type}
+        </a>
+    `;
+}
+
+// ============================================
+// CATEGORY FILTERS
+// ============================================
+function initCategoryFilters() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            const category = this.dataset.category;
+
+            filterBtns.forEach(b => b.classList.remove('active'));
             this.classList.add('active');
-            document.getElementById(targetPage + '-page').classList.add('active');
+
+            filterProjects(category);
         });
     });
-    
-    const socialLinks = document.querySelectorAll('.social-link');
-    let currentIndex = -1;
-    let selectedIndex = -1;
-    
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'ArrowDown' || e.key === 'Tab') {
-            e.preventDefault();
-            currentIndex = (currentIndex + 1) % socialLinks.length;
-            updateSelection();
-        } else if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            currentIndex = currentIndex <= 0 ? socialLinks.length - 1 : currentIndex - 1;
-            updateSelection();
-        } else if (e.key === 'Enter' && currentIndex >= 0) {
-            e.preventDefault();
-            selectedIndex = currentIndex;
-            updateSelection();
-            setTimeout(() => {
-                socialLinks[currentIndex].click();
-            }, 100);
+}
+
+function filterProjects(category) {
+    const cards = document.querySelectorAll('.project-card');
+
+    cards.forEach((card, index) => {
+        const cardCategory = card.dataset.category;
+        const shouldShow = category === 'all' || cardCategory === category;
+
+        if (shouldShow) {
+            card.style.display = 'block';
+            card.style.animation = 'none';
+            card.offsetHeight; // Trigger reflow
+            card.style.animation = `slideUp 0.4s ease-out ${index * 0.05}s backwards`;
+        } else {
+            card.style.display = 'none';
         }
     });
-    
-    socialLinks.forEach((link, index) => {
-        link.addEventListener('click', function(e) {
-            selectedIndex = index;
-            updateSelection();
-        });
-    });
-    
-    function updateSelection() {
-        socialLinks.forEach((link, index) => {
-            if (index === currentIndex || index === selectedIndex) {
-                link.classList.add('selected');
-            } else {
-                link.classList.remove('selected');
-            }
-        });
-    }
-    
-    socialLinks.forEach((link, index) => {
-        link.addEventListener('mouseenter', () => {
-            if (selectedIndex !== index) {
-                currentIndex = -1;
-                updateSelection();
-            }
-        });
-    });
-    
-    // Add random fun facts rotation
-    const funFacts = [
-        "Can code for 12+ hours straight when debugging that one elusive bug",
-        "Believes that 3 AM is the optimal time for creative coding",
-        "Has more game ideas than time to implement them (classic developer problem)",
-        "Thinks coffee should be considered a programming language",
-        "Still gets excited when a build compiles without errors on the first try",
-        "Has memorized more shortcut keys than phone numbers",
-        "Once spent 6 hours fixing a bug caused by a single missing semicolon",
-        "Believes that all problems can be solved with enough caffeine and determination"
-    ];
-    
-    // Rotate fun facts every 10 seconds
-    setInterval(() => {
-        const funFactsElement = document.querySelector('.fun-facts ul');
-        if (funFactsElement && funFactsElement.children.length > 0) {
-            // Get random fact
-            const randomIndex = Math.floor(Math.random() * funFacts.length);
-            const randomFact = funFacts[randomIndex];
-            
-            // Update a random list item
-            const listItems = funFactsElement.querySelectorAll('li');
-            if (listItems.length > 0) {
-                const randomListItem = listItems[Math.floor(Math.random() * listItems.length)];
-                randomListItem.textContent = randomFact;
-            }
-        }
-    }, 10000);
-    
-    // Add matrix rain effect to background periodically
-    setInterval(() => {
-        const terminal = document.querySelector('.terminal');
-        if (terminal) {
-            terminal.classList.add('matrix-effect');
-            setTimeout(() => {
-                terminal.classList.remove('matrix-effect');
-            }, 2000);
-        }
-    }, 30000);
-    
-    // Add resume download functionality
+}
+
+// ============================================
+// RESUME BUTTON
+// ============================================
+function initResumeButton() {
     const resumeButton = document.getElementById('resume-preview-btn');
-    if (resumeButton) {
-        resumeButton.addEventListener('click', function(e) {
-            e.preventDefault();
+    if (!resumeButton) return;
+
+    resumeButton.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (typeof openDocument === 'function') {
+            openDocument('assets/JayResume.pdf', 'pdf');
+        } else {
+            // Fallback to download if openDocument is not available
             const link = document.createElement('a');
             link.href = 'assets/JayResume.pdf';
             link.download = 'JayVarma-Resume.pdf';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-        });
-    }
-});
+        }
+    });
+}
 
-
+// ============================================
+// DISCORD ACTIVITY (Lanyard)
+// ============================================
 let activitiesCache = [];
-let lastScheduledEnd = null;
 let ws = null;
 let heartbeatInterval = null;
 const USER_ID = '745203026335236178';
 
 function connectToLanyard() {
-    showLoadingSpinner();
-    
     try {
         ws = new WebSocket('wss://api.lanyard.rest/socket');
-        
-        ws.onopen = function() {
+
+        ws.onopen = function () {
             console.log('Connected to Lanyard WebSocket');
-            updateLoadingText('retrieving activity data...');
         };
-        
-        ws.onmessage = function(event) {
+
+        ws.onmessage = function (event) {
             const message = JSON.parse(event.data);
             handleWebSocketMessage(message);
         };
-        
-        ws.onclose = function(event) {
-            console.log('Lanyard WebSocket connection closed:', event.code, event.reason);
-            showLoadingSpinner();
-            updateLoadingText('reconnecting...');
-            // Reconnect after 5 seconds
+
+        ws.onclose = function () {
+            console.log('Lanyard WebSocket closed, reconnecting...');
             setTimeout(connectToLanyard, 5000);
             if (heartbeatInterval) {
                 clearInterval(heartbeatInterval);
                 heartbeatInterval = null;
             }
         };
-        
-        ws.onerror = function(error) {
+
+        ws.onerror = function (error) {
             console.error('Lanyard WebSocket error:', error);
-            updateLoadingText('connection failed, retrying...');
         };
     } catch (error) {
-        console.error('Failed to connect to Lanyard WebSocket:', error);
-        // Fallback to REST API
-        setTimeout(fetchDiscordActivityREST, 1000);
+        console.error('Failed to connect to Lanyard:', error);
     }
 }
 
 function handleWebSocketMessage(message) {
-    console.log('Received WebSocket message:', message);
-    
     switch (message.op) {
-        case 1: // Hello
-            const heartbeatIntervalMs = message.d.heartbeat_interval;
-            console.log('Starting heartbeat with interval:', heartbeatIntervalMs);
-            startHeartbeat(heartbeatIntervalMs);
+        case 1:
+            startHeartbeat(message.d.heartbeat_interval);
             sendInitialize();
             break;
-            
-        case 0: // Event
-            if (message.t === 'INIT_STATE') {
-                console.log('Received INIT_STATE:', message.d);
-                // For single user subscription, the data is directly in message.d
-                updatePresence(message.d);
-            } else if (message.t === 'PRESENCE_UPDATE') {
-                console.log('Received PRESENCE_UPDATE:', message.d);
-                updatePresence(message.d);
+        case 0:
+            if (message.t === 'INIT_STATE' || message.t === 'PRESENCE_UPDATE') {
+                activitiesCache = message.d.activities || [];
             }
             break;
     }
 }
 
 function startHeartbeat(intervalMs) {
-    if (heartbeatInterval) {
-        clearInterval(heartbeatInterval);
-    }
-    
+    if (heartbeatInterval) clearInterval(heartbeatInterval);
+
     heartbeatInterval = setInterval(() => {
         if (ws && ws.readyState === WebSocket.OPEN) {
             ws.send(JSON.stringify({ op: 3 }));
@@ -414,322 +642,86 @@ function startHeartbeat(intervalMs) {
 
 function sendInitialize() {
     if (ws && ws.readyState === WebSocket.OPEN) {
-        const initMessage = {
+        ws.send(JSON.stringify({
             op: 2,
-            d: {
-                subscribe_to_id: USER_ID
-            }
-        };
-        console.log('Sending initialize message:', initMessage);
-        ws.send(JSON.stringify(initMessage));
+            d: { subscribe_to_id: USER_ID }
+        }));
     }
 }
 
-function updatePresence(presenceData) {
-    console.log('Updating presence with data:', presenceData);
-    const activities = presenceData.activities || [];
-    console.log('Extracted activities:', activities);
-    activitiesCache = activities;
-    lastScheduledEnd = null;
-    hideLoadingSpinner();
-    renderActivities(activities);
-}
-
-function showLoadingSpinner() {
-    const loadingElement = document.getElementById('activity-loading');
-    const activityDetails = document.getElementById('activity-details');
-    const activityExtras = document.getElementById('activity-extras');
-    
-    if (loadingElement) loadingElement.style.display = 'flex';
-    if (activityDetails) activityDetails.style.display = 'none';
-    if (activityExtras) activityExtras.style.display = 'none';
-}
-
-function hideLoadingSpinner() {
-    const loadingElement = document.getElementById('activity-loading');
-    if (loadingElement) loadingElement.style.display = 'none';
-}
-
-function updateLoadingText(text) {
-    const loadingText = document.querySelector('.loading-text');
-    if (loadingText) loadingText.textContent = text;
-}
-
-// Fallback REST API function
-async function fetchDiscordActivityREST() {
-    showLoadingSpinner();
-    updateLoadingText('loading activity data...');
-    
-    try {
-        const response = await fetch(`https://api.lanyard.rest/v1/users/${USER_ID}`);
-        const data = await response.json();
-
-        if (data.success) {
-            const activities = data.data.activities || [];
-            activitiesCache = activities;
-            lastScheduledEnd = null;
-            hideLoadingSpinner();
-            renderActivities(activities);
-        }
-    } catch (error) {
-        console.error('Failed to fetch Discord activity:', error);
-        updateLoadingText('failed to load activity data');
-        setTimeout(() => {
-            const activityDetails = document.getElementById('activity-details');
-            if (activityDetails) activityDetails.style.display = 'none';
-            hideLoadingSpinner();
-        }, 2000);
-    }
-}
-
-function renderActivities(activities) {
-    const activityDetails = document.getElementById('activity-details');
-    const activityName = document.getElementById('activity-name');
-    const activityDescription = document.getElementById('activity-description');
-    const activityTime = document.getElementById('activity-time');
-    const activityExtras = document.getElementById('activity-extras');
-    const extrasToggle = document.getElementById('extras-toggle');
-    const extrasList = document.getElementById('extras-list');
-    const discordActivity = document.querySelector('.discord-activity');
-
-    if (!activityDetails || !activityName || !activityDescription || !activityTime) return;
-
-    if (!activities || activities.length === 0) {
-        activityDetails.style.display = 'none';
-        if (activityExtras) activityExtras.style.display = 'none';
-        if (discordActivity) discordActivity.style.display = 'none';
-        return;
-    }
-
-    const primary = activities[0];
-    activityName.textContent = primary.name || '';
-    let details = [];
-    if (primary.details) details.push(primary.details);
-    if (primary.state) details.push(primary.state);
-    activityDescription.textContent = details.join(' • ');
-
-    const isPrimarySpotify = primary.name && primary.name.toLowerCase().includes('spotify') && primary.timestamps && primary.timestamps.start && primary.timestamps.end;
-    if (!isPrimarySpotify) {
-        if (primary.timestamps && primary.timestamps.start) {
-            const elapsed = Date.now() - primary.timestamps.start;
-            activityTime.textContent = `for ${formatElapsedTime(elapsed)}`;
-        } else {
-            activityTime.textContent = '';
-        }
-    } else {
-        activityTime.textContent = '';
-    }
-
-    const activityProgress = document.getElementById('activity-progress');
-    const activityProgressFill = document.getElementById('activity-progress-fill');
-    if (primary.name && primary.name.toLowerCase().includes('spotify') && primary.timestamps && primary.timestamps.start && primary.timestamps.end) {
-        const start = primary.timestamps.start;
-        const end = primary.timestamps.end;
-        const pct = Math.max(0, Math.min(100, Math.round(((Date.now() - start) / (end - start)) * 100)));
-        if (activityProgress && activityProgressFill) {
-            activityProgress.style.display = 'block';
-            activityProgressFill.style.width = `${pct}%`;
-            const curEl = document.getElementById('activity-progress-current');
-            const totEl = document.getElementById('activity-progress-total');
-            if (curEl) curEl.textContent = formatTimeMMSS(Date.now() - start);
-            if (totEl) totEl.textContent = formatTimeMMSS(end - start);
-        }
-    } else {
-        if (activityProgress) activityProgress.style.display = 'none';
-    }
-
-    activityDetails.style.display = 'block';
-    if (discordActivity) discordActivity.style.display = 'block';
-
-    if (activityExtras && extrasList && extrasToggle) {
-        if (activities.length > 1) {
-            // Preserve the current expansion state
-            const wasOpen = activityExtras.classList.contains('open');
-            
-            // Clear and rebuild the extras list
-            extrasList.innerHTML = '';
-            
-            for (let i = 1; i < activities.length; i++) {
-                const act = activities[i];
-                const div = document.createElement('div');
-                div.className = 'extras-item';
-
-                const nameEl = document.createElement('div');
-                nameEl.className = 'extras-item-name';
-                nameEl.textContent = act.name || 'Unknown';
-
-                const descEl = document.createElement('div');
-                descEl.className = 'extras-item-desc';
-                let sub = [];
-                if (act.details) sub.push(act.details);
-                if (act.state) sub.push(act.state);
-                descEl.textContent = sub.join(' • ');
-
-                const timeEl = document.createElement('div');
-                timeEl.className = 'extras-item-time';
-                const isExtraSpotify = act.name && act.name.toLowerCase().includes('spotify') && act.timestamps && act.timestamps.start && act.timestamps.end;
-                if (!isExtraSpotify && act.timestamps && act.timestamps.start) {
-                    timeEl.dataset.start = act.timestamps.start;
-                    timeEl.textContent = `for ${formatElapsedTime(Date.now() - act.timestamps.start)}`;
-                } else {
-                    timeEl.textContent = '';
-                }
-
-                div.appendChild(nameEl);
-                if (descEl.textContent) div.appendChild(descEl);
-                if (timeEl.textContent) div.appendChild(timeEl);
-
-                if (act.name && act.name.toLowerCase().includes('spotify') && act.timestamps && act.timestamps.start && act.timestamps.end) {
-                    const extraProgress = document.createElement('div');
-                    extraProgress.className = 'progress-bar';
-                    extraProgress.style.marginTop = '6px';
-                    const extraFill = document.createElement('div');
-                    extraFill.className = 'progress-fill';
-                    const pct = Math.max(0, Math.min(100, Math.round(((Date.now() - act.timestamps.start) / (act.timestamps.end - act.timestamps.start)) * 100)));
-                    extraFill.style.width = `${pct}%`;
-                    extraFill.dataset.start = String(act.timestamps.start);
-                    extraFill.dataset.end = String(act.timestamps.end);
-                    const extraTimes = document.createElement('div');
-                    extraTimes.className = 'progress-times extras-progress-times';
-                    const extraCur = document.createElement('span');
-                    extraCur.className = 'progress-current';
-                    extraCur.textContent = formatTimeMMSS(Date.now() - act.timestamps.start);
-                    const extraTot = document.createElement('span');
-                    extraTot.className = 'progress-total';
-                    extraTot.textContent = formatTimeMMSS(act.timestamps.end - act.timestamps.start);
-                    extraTimes.appendChild(extraCur);
-                    extraTimes.appendChild(extraTot);
-                    extraProgress.appendChild(extraFill);
-                    div.appendChild(extraTimes);
-                    div.appendChild(extraProgress);
-                }
-
-                extrasList.appendChild(div);
-            }
-            
-            // Show the extras section
-            activityExtras.style.display = 'block';
-            
-            // Update button text based on current state
-            extrasToggle.textContent = wasOpen ? `- hide activities` : `+ more activities (${activities.length - 1})`;
-            
-            // Set up the toggle functionality
-            extrasToggle.onclick = () => {
-                const nowOpen = activityExtras.classList.toggle('open');
-                extrasToggle.textContent = nowOpen ? `- hide activities` : `+ more activities (${activities.length - 1})`;
-            };
-            
-            // Restore the previous expansion state
-            if (wasOpen) {
-                activityExtras.classList.add('open');
-            } else {
-                activityExtras.classList.remove('open');
-            }
-        } else {
-            activityExtras.style.display = 'none';
-        }
-    }
-}
-
+// ============================================
+// UTILITY FUNCTIONS
+// ============================================
 function formatElapsedTime(milliseconds) {
     const seconds = Math.floor(milliseconds / 1000);
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
     const days = Math.floor(hours / 24);
-    
-    if (days > 0) {
-        return `${days}d ${hours % 24}h`;
-    } else if (hours > 0) {
-        return `${hours}h ${minutes % 60}m`;
-    } else if (minutes > 0) {
-        return `${minutes}m ${seconds % 60}s`;
+
+    if (days > 0) return `${days}d ${hours % 24}h`;
+    if (hours > 0) return `${hours}h ${minutes % 60}m`;
+    if (minutes > 0) return `${minutes}m ${seconds % 60}s`;
+    return `${seconds}s`;
+}
+
+// ============================================
+// 3D GALLERY
+// ============================================
+function init3DGallery() {
+    const grid = document.getElementById('gallery-grid');
+    if (!grid) return;
+
+    models3D.forEach((model, index) => {
+        const card = create3DModelCard(model, index);
+        grid.appendChild(card);
+    });
+}
+
+function create3DModelCard(model, index) {
+    // Create an anchor tag if it has a URL, otherwise a div
+    const card = document.createElement(model.sketchfabUrl ? 'a' : 'div');
+    card.className = 'model-card';
+    card.style.animationDelay = `${index * 0.05}s`;
+
+    if (model.sketchfabUrl) {
+        card.href = model.sketchfabUrl;
+        card.target = '_blank';
+        card.rel = 'noopener noreferrer';
+    }
+
+    // Static Thumbnail
+    let thumbnailHTML;
+    if (model.thumbnail) {
+        thumbnailHTML = `<img src="${model.thumbnail}" alt="${model.name}" class="model-card-thumbnail" loading="lazy">`;
     } else {
-        return `${seconds}s`;
+        // Fallback placeholder - Cyberpunk Style
+        thumbnailHTML = `
+            <div class="model-card-thumbnail model-placeholder-cyber">
+                <i class="fas fa-cube"></i>
+                <span>ASSET::PREVIEW</span>
+            </div>
+        `;
     }
+
+    // Overlay with Icon
+    let overlayIcon = 'fa-external-link-alt';
+    const overlayHTML = model.comingSoon
+        ? `<div class="model-card-overlay" style="opacity: 1; background: rgba(0,0,0,0.7);"><span style="font-size: 0.9rem;">Coming Soon</span></div>`
+        : `<div class="model-card-overlay"><i class="fas ${overlayIcon}"></i></div>`;
+
+    card.innerHTML = `
+        ${thumbnailHTML}
+        ${overlayHTML}
+        <div class="model-info">
+            <h3>${model.name}</h3>
+            <p>${model.description.substring(0, 80)}${model.description.length > 80 ? '...' : ''}</p>
+            <div class="tech-badges">
+                ${model.tech.map(t => `<span class="tech-badge">${t}</span>`).join('')}
+            </div>
+        </div>
+    `;
+
+    return card;
 }
 
-function formatTimeMMSS(milliseconds) {
-    if (isNaN(milliseconds) || milliseconds < 0) return '0:00';
-    const totalSeconds = Math.floor(milliseconds / 1000);
-    const seconds = totalSeconds % 60;
-    const totalMinutes = Math.floor(totalSeconds / 60);
-    const minutes = totalMinutes % 60;
-    const hours = Math.floor(totalMinutes / 60);
 
-    const pad = (v) => (v < 10 ? '0' + v : String(v));
-    if (hours > 0) {
-        return `${hours}:${pad(minutes)}:${pad(seconds)}`;
-    }
-    return `${minutes}:${pad(seconds)}`;
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    connectToLanyard();
-    setInterval(() => {
-        if (!activitiesCache || activitiesCache.length === 0) return;
-        const primary = activitiesCache[0];
-        const activityTime = document.getElementById('activity-time');
-        const activityName = document.getElementById('activity-name');
-        if (primary && activityTime && activityName) {
-            const isPrimarySpotify = primary.name && primary.name.toLowerCase().includes('spotify') && primary.timestamps && primary.timestamps.start && primary.timestamps.end;
-            if (!isPrimarySpotify) {
-                if (primary.timestamps && primary.timestamps.start) {
-                    const elapsed = Date.now() - primary.timestamps.start;
-                    activityTime.textContent = `for ${formatElapsedTime(elapsed)}`;
-                } else {
-                    activityTime.textContent = '';
-                }
-            } else {
-                activityTime.textContent = '';
-            }
-        }
-            const activityProgressFill = document.getElementById('activity-progress-fill');
-            if (activityProgressFill && activitiesCache[0] && activitiesCache[0].timestamps && activitiesCache[0].timestamps.start && activitiesCache[0].timestamps.end) {
-                const s = activitiesCache[0].timestamps.start;
-                const e = activitiesCache[0].timestamps.end;
-                const pct = Math.max(0, Math.min(100, Math.round(((Date.now() - s) / (e - s)) * 100)));
-                activityProgressFill.style.width = `${pct}%`;
-                document.getElementById('activity-progress').style.display = 'block';
-                const curEl = document.getElementById('activity-progress-current');
-                const totEl = document.getElementById('activity-progress-total');
-                if (curEl) curEl.textContent = formatTimeMMSS(Date.now() - s);
-                if (totEl) totEl.textContent = formatTimeMMSS(e - s);
-                if (Date.now() >= e && lastScheduledEnd !== e) {
-                    lastScheduledEnd = e;
-                    setTimeout(() => {
-                        fetchDiscordActivity();
-                        lastScheduledEnd = null;
-                    }, 2000);
-                }
-            }
-        const activityExtras = document.getElementById('activity-extras');
-        if (activityExtras && activityExtras.classList.contains('open')) {
-            const timeEls = document.querySelectorAll('.extras-item-time');
-            timeEls.forEach(el => {
-                const start = parseInt(el.dataset.start, 10);
-                if (!isNaN(start)) {
-                    el.textContent = `for ${formatElapsedTime(Date.now() - start)}`;
-                }
-            });
-                const extraFills = document.querySelectorAll('.extras-item .progress-fill');
-                extraFills.forEach(fill => {
-                    const s = parseInt(fill.dataset.start, 10);
-                    const e = parseInt(fill.dataset.end, 10);
-                    if (!isNaN(s) && !isNaN(e) && e > s) {
-                        const pct = Math.max(0, Math.min(100, Math.round(((Date.now() - s) / (e - s)) * 100)));
-                        fill.style.width = `${pct}%`;
-                        const parent = fill.closest('.extras-item');
-                        if (parent) {
-                            const times = parent.querySelector('.extras-progress-times');
-                            if (times) {
-                                const cur = times.querySelector('.progress-current');
-                                const tot = times.querySelector('.progress-total');
-                                if (cur) cur.textContent = formatTimeMMSS(Date.now() - s);
-                                if (tot) tot.textContent = formatTimeMMSS(e - s);
-                            }
-                        }
-                    }
-                });
-        }
-    }, 1000);
-});
