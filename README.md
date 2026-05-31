@@ -19,7 +19,7 @@
 
 ## 🚀 About The Project
 
-This repository contains the source code for my personal portfolio website, [jayvarma.site](https://jayvarma.site). 
+This repository contains the source code for my personal portfolio website, [website.jayvarma.site](https://website.jayvarma.site). 
 
 Designed to reflect my passions and professional journey, the portfolio is built with a unique, interactive, and terminal-inspired aesthetic. It serves as a comprehensive showcase of my work across various disciplines, including game development, 3D modeling, and data science/machine learning.
 
