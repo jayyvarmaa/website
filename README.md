@@ -4,7 +4,7 @@
   <p align="center">
     A personal portfolio blending Game Development, 3D Art, and Data Science.
     <br />
-    <a href="https://jayvarma.site"><strong>View Live Site »</strong></a>
+    <a href="https://website.jayvarma.site"><strong>View Live Site »</strong></a>
     <br />
     <br />
     <a href="#-features">Features</a>
